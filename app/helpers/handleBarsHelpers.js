@@ -28,13 +28,21 @@ const handleBarsHelpers=()=>{
 
     hbs.registerHelper('orderStatus',function(status){
         let text='';
-        switch(status){
-            case 'order_placed': text='Order Received'; break;
-            case 'order_confirmed': text = 'Order Confirmed'; break;
-            case 'in_the_kitchen': text = 'In the Kitchen'; break;
-            case 'begin_packed': text = 'Begin Packed'; break;
-            case 'out_for_delivery': text = 'Out For Delivery'; break;
-            case 'delivered': text = 'Order completed'; break;
+        let statusObj = {}
+        statusObj.order_placed      = 1;
+        statusObj.order_confirmed   = 2;
+        statusObj.in_the_kitchen    = 3;
+        statusObj.begin_packed      = 4;
+        statusObj.out_for_delivery  = 5;
+        statusObj.delivered         = 6;
+        let index = (status=='delivered')?statusObj[status]:statusObj[status]+1
+        switch(index){
+            case 1: text = 'Order Received'; break;
+            case 2: text = 'Order Confirmed'; break;
+            case 3: text = 'In the Kitchen'; break;
+            case 4: text = 'Begin Packed'; break;
+            case 5: text = 'Out For Delivery'; break;
+            case 6: text = 'Order completed'; break;
             default: break;
         }
         return text

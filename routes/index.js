@@ -1,8 +1,9 @@
 import express from 'express'
 import { cartController, homeController, loginController, orderPlaceController, registerController } from '../app/http/controllers'
 import { Auth } from '../app'
-const router = express.Router()
+const router   = express.Router()
 const customer = express.Router()
+const admin    = express.Router()
 
 router.get('/',homeController.homepage)
 router.get('/register',registerController.index)

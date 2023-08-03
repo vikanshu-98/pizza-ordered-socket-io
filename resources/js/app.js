@@ -2,6 +2,7 @@ const display = document.getElementById('sideMenu')
 const hidden = document.getElementById('closeMenu')
 const list = document.getElementById('list')
 const axios = require('axios')
+const moment = require('moment')
 
 display.onclick = function () {
     list.style.visibility = "visible"
@@ -75,7 +76,7 @@ async function updateCart(obj) {
 }
 
 //current status blink 
-const blinkerCurrentStatus=()=> {
+const blinkerCurrentStatus = () => {
     let blink = document.getElementById('statusBlink')
     if (!blink.style.backgroundColor) {
         blink.style.backgroundColor = 'white'
@@ -93,11 +94,33 @@ setInterval(blinkerCurrentStatus, 1000)
 
 //status change code
 
-let singleDocumentId = document.getElementById('singleOrderData')
-let AllList          = document.querySelectorAll('.status_line') 
-let order            = (singleDocumentId)?singleDocumentId.value:null
-order                = JSON.parse(order)
-let smallElement     = document.createElement('small')
+let singleDocumentId = document.getElementById('singleOrderedData')
+let AllList = document.querySelectorAll('.order-tracking')
+let status = document.querySelectorAll('.order-status')
+let order = (singleDocumentId) ? JSON.parse(singleDocumentId.value) : null
+const updateStatus = function () {
+    AllList.forEach(elem => {
+        elem.classList.remove('completed')
+    });
+    let stepCompleted = true;
+    status.forEach(elem => {
+        if (stepCompleted) {
+            elem.parentElement.classList.add('completed')
+        }
+        if (elem.dataset.status == order.orderStatus) {
+            stepCompleted = false
+            let span = document.createElement('span')
+            // span.innerText=moment(order.updatedAt).day()
+            let day1 = moment(order.updatedAt).format('ddd,MMM DD');
+            let day2 = moment(order.updatedAt).format(' hh:mm A'); 
+            span.innerText =day1+' at '+day2
+
+            elem.appendChild(span)
+
+        }
+    })
+}
+updateStatus()
 
 
 //socket js starts here
