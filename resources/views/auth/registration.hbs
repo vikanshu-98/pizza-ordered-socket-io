@@ -1,0 +1,44 @@
+<section class="py-8 bg-[#F8F8F8]">
+    <div class="flex items-center min-h-full py-12 px-3 justify-center sm:w-full">
+        <div class="max-w-md w-full space-y-6">
+            <div>
+                <a href="/">
+                    <img class="mx-auto h-12 w-auto" src="/img/logo.png" alt="form" srcset="">
+                </a>
+                <h2 class="capitailze mt-6 text-3xl font-extrabold text-center ">Registration</h2>
+            </div>
+            <form action="/register" method="POST" class="mt-4 space-y-6">
+                <div class="rounded-md shadow-sm">
+                    <div class="my-4">
+                        <input
+                            class=" w-full border border-grey-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 px-3 py-2 focus:border-[#FE5F1E] rounded-md"
+                            type="text" name="name" id="" placeholder="name" value="{{ messages.name }}">
+                    </div>
+                    <div class="my-4">
+                        <input
+                            class=" w-full border border-grey-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 px-3 py-2 focus:border-[#FE5F1E] rounded-md"
+                            type="email" name="email" id="" placeholder="Email Address" value="{{ messages.email }}">
+                    </div>
+                    <div class="my-4">
+                        <input
+                            class=" w-full border border-grey-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:z-10 px-3 py-2 focus:border-[#FE5F1E] rounded-md"
+                            type="text" name="password" id="" placeholder="Password" value="{{messages.password }}">
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center"  >  
+                        {{#if messages.error }}
+                            <span class="text-red-600 font-bold text-sm" id="errorMessage" >{{messages.error}}</span>
+                        {{/if}}
+                    </div>
+                    <div class="text-sm ">
+                        <a href="/login" class="text-[#FE5F1E]">Already have an account?</a>
+                    </div>
+                </div>
+                <div>
+                    <button class="w-full bg-[#FE5F1E] py-2 px-4 text-white rounded-md shadow-xl">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
