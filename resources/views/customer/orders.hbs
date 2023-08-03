@@ -1,0 +1,30 @@
+<section class="xl:w-[1200px] mx-auto mt-4">
+    <div>
+        <h1 class="capitalize text-xl font-bold">All Orders</h1>
+    </div>
+    <div class="pt-4">
+        <table class=" table-auto w-full border-separate border border-white  bg-[#fff]">
+            <thead>
+                <tr class="bg-[#FE5F1E] font-bold text-white text-left">
+                    <th class=" px-4 py-2 border border-white">S No</th>
+                    <th class=" px-4 py-2 border border-white">Order Id</th>
+                    <th class=" px-4 py-2 border border-white">Mobile</th>
+                    <th class=" px-4 py-2 border border-white">Address</th>
+                    <th class=" px-4 py-2 border border-white">Date Time </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orderData}}
+                <tr>
+                    <td class=" px-4 py-2  border border-white"> {{inc @index}}</td>
+                    <td class=" px-4 py-2  border border-white"><a class="text-[#FE5F1E]" href="/customer/single/{{this._id}}">{{this._id }}</a></td>
+                    <td class=" px-4 py-2  border border-white">{{this.phoneNumber}}</td>
+                    <td class=" px-4 py-2  border border-white">{{this.address}}</td>
+                    <td class=" px-4 py-2  border border-white">{{changeDateFormat  this.createdAt}}</td>
+                </tr>
+                {{/each }}
+
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,55 @@
+<section class="xl:w-1/2 mx-auto">
+    {{#if session.cart}}
+    <div class="flex items-center border-b py-4  ">
+        <img src="img/cart-black.png" alt="sdsd" />
+        <h1 class="text-2xl font-extrabold capitalize  ml-3">Order Summary</h1>
+    </div>
+    {{#each session.cart.items}}
+    <div class="flex items-center mx-auto my-4">
+        <img class="w-20" src="img/pizza.png" alt="">
+        <div class="flex-1 ml-4">
+            <h1 class="font-semibold text-xl">{{ this.item.name }}</h1>
+            <span class="uppercase font-medium text-sm border rounded-full py-1 px-3">{{ this.item.size }}</span>
+        </div>
+        <span class="capitalize flex-1">{{this.qty }} Pcs</span>
+        <h2 class="font-bold">&#8377; {{multipy this.qty this.item.price }}</h2>
+    </div>
+    <hr>
+    {{/each }}
+    <div class="text-right my-4">
+        <div class="flex flex-1 justify-end items-center">
+            <span class="capitalize font-bold text-md">Total Amount :</span>
+            <span class="font-bold text-lg text-[#FE5F1E] ml-3">&#8377; {{session.cart.totalPrice }}</span>
+        </div>
+        <div class="flex flex-1 justify-end items-center">
+            <span class="capitalize font-bold text-sm">Total Quantity :</span>
+            <span class="font-bold text-sm text-[#FE5F1E] ml-3"> {{session.cart.totalQty }} Pcs</span>
+        </div>
+        <div>
+            <form method="POST" action="/checkout" id="checkoutForm">
+                <input type="number" value="{{ messages.number }}" name="number" id="" placeholder="Mobile Number" class="border border-gray-500 placeholder-grey-500 w-1/2 mt-3 p-2 focus:outline-none focus:border-[#FE5F1E]">
+                <input type="text" value="{{ messages.address }}" name="address" id="" placeholder="Address"
+                    class="border border-gray-500 placeholder-grey-500 w-1/2 mt-3 p-2  focus:outline-none focus:border-[#FE5F1E] ">
+                  {{#if messages.error}}  <div class="mb-2 pl-[21px]"><small class="text-xs font-bold text-red-500 ">{{ messages.error }}</small></div> 
+                  {{/if}}
+            </form> 
+            {{#if users }}
+            <button class=" mt-3 shadow-xl hover:transition-all hover:duration-500 hover:ease-in-out hover:text-[#FE5F1E] hover:border border-[#FE5F1E] hover:bg-[#fff] rounded-full bg-[#FE5F1E] py-2 px-6 text-[#fff] capitalize font-bold" onclick="document.getElementById('checkoutForm').submit()">Order Now</button>
+            {{else  }}
+              <a href=" /login" class=" shadow-xl hover:transition-all hover:duration-500 hover:ease-in-out hover:text-[#FE5F1E] hover:border border-[#FE5F1E] hover:bg-[#fff]  inline-block rounded-full bg-[#FE5F1E] py-2 px-6 text-[#fff] capitalize font-bold"> Login To Continue</a>
+            {{/if  }}
+           
+
+        </div>
+
+    </div>
+    {{else }}
+        <div class="text-center">
+            <h2 class="text-2xl font-bold capitalize">Cart Empty!!</h2>
+            <p class="text-grey-500 my-4">You probably haven't ordered a pizza yet.
+                <br>To order a pizza,go to main page or click on go back button.</p>
+            <img class="mx-auto w-3/5 my-8" src="img/empty-cart.png" alt="empty" srcset="">
+            <a href="/" class=" shadow-xl hover:transition-all hover:duration-500 hover:ease-in-out hover:text-[#FE5F1E] hover:border border-[#FE5F1E] hover:bg-[#fff]  inline-block rounded-full bg-[#FE5F1E] py-2 px-6 text-[#fff] capitalize font-bold">Go Back</a>
+        </div>
+    {{/if }}
+</section>

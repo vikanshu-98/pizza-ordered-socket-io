@@ -1,0 +1,46 @@
+<nav
+        class="custom-container flex align-items-center justify-between md:py-4 mx-auto xl:w-[1200px] md:w-[1000px]  sm:w-full px-[1rem]">
+        <div class="left-image">
+                <a href="/"><img class="max-[640px]:w-[90%] max-[640px]:p-[14px]" src="/img/logo.png" alt=""></a>
+        </div>
+        <div>
+                <ul class=" flex items-center max-[768px]:w-1/2 max-[768px]:h-screen max-[768px]:inline-block max-[768px]:fixed max-[768px]:transition-all max-[768px]:ease-in-out max-[768px]:delay-[.3s] max-[768px]:right-[0px] max-[768px]:invisible max-[768px]:pt-[40px] max-[768px]:pr-[20px] max-[768px]:pb-[0] max-[768px]-pl-[20px] max-[768px]:bg-[#ccc] max-[768px]:z-[12]"
+                        id="list">
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/"
+                                        class="transition-all ease-in-out duration-[.3s] hover:text-[#FE5F1E] hover:cursor-pointer">Menu</a>
+                        </li>
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Offer</a>
+                        </li>
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/customer/orders"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Orders</a>
+                        </li>
+                        {{#if users }}
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/profiels"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">{{users.name}}</a>
+                        </li>
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/logout"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Logout</a>
+                        </li>
+                        {{else }}
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/register"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Register</a>
+                        </li>
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/login"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Login</a>
+                        </li>
+                        {{/if }}
+                        <li class="ml-6 max-[768px]:mt-[30px]">
+                                <a href="/cart"
+                                        class="transition-all ease-in-out duration-[.3s]  hover:cursor-pointer  inline-block px-4 py-2 rounded-3xl items-center bg-[#FE5F1E] hover:bg-[#b23301] flex max-[768px]:w-[90px]">
+                                        <span class="font-bold text-[#fff] pr-2" id="cartCounter">{{nullCheckCondition session.cart}}</span>
+                                        <img src="/img/cart.png" alt="ss">
+                                </a>
+                        </li>
+                        <img src="/img/arrow.png" alt="" id="closeMenu"
+                                class="absolute top-[8px] left-[7px] w-[35px] hidden max-[768px]:block">
+                </ul>
+                <img src="/img/menu.png" alt="" id="sideMenu"
+                        class="absolute top-[20px] right-[19px] w-[35px] hidden max-[768px]:block">
+        </div>
+</nav>

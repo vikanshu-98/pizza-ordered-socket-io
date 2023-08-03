@@ -1,0 +1,145 @@
+<section class="py-16 bg-[#F8F8F8]">
+    <div class="flex items-center mx-auto justify-between xl:w-[1200px] px-[1rem] md:w-[1000px]  sm:w-full">
+        <div class="w-1/2">
+            <h6 class="italic text-xl">Are you hungry?</h6>
+            <h6 class="text-6xl max-[768px]:text-2xl font-black">Don't Wait!!</h6>
+            <button
+                class="rounded-3xl bg-[#FE5F1E] hover:bg-[#b23301] text-white py-2 px-6 font-bold mt-4 transition-all ease-in-out delay-[.3s] hover:translate-x-2">Order
+                Now!</button>
+        </div>
+        <div class="w-1/2">
+            <img class="h-auto max-w-full" src="/img/hero-pizza.png" alt="hero-pizza" srcset="">
+        </div>
+    </div>
+</section>
+
+<section class="xl:w-[1200px] md:w-[1000px] mx-auto py-16 px-[1rem]">
+    <h1 class="text-center text-2xl font-bold my-6">All Pizza's</h1>
+    <div class="grid grid-cols-4 max-[768px]:grid-cols-1 max-[768px]:justify-items-center gap-y-16 gap-x-14">
+         
+        {{#each menus }}
+                <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/{{image}}" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">{{name}}</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4">{{size}}</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">&#8377; {{price}}</span>
+                <button data-pizza-details="{{JSON2String this }}"
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out add-to-cart">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        {{/each  }}
+        {{!-- <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-64 border border-[1px] border-[#FE5F1E] py-3 rounded-lg shadow-2xl">
+            <img class="h-40 mx-auto mb-4" src="img/pizza.png" alt="pizza">
+            <div class="text-center">
+                <h1 class="text-lg mb-2">Margherita</h1>
+                <span class="uppercase text-xs bg-[#F8F8F8] rounded-full py-1 px-4"> small</span>
+            </div>
+            <div class="flex items-center justify-around mt-6 ">
+                <span class="font-bold">₹ 250</span>
+                <button
+                    class="capitalize ring-2 font-bold ring-[#FE5F1E] text-[#FE5F1E] py-1 px-6 rounded-full hover:text-[#fff] hover:bg-[#FE5F1E] hover:ring-[#fff] transition-all duration-1000 ease-in-out">
+                    <span class=" text-lg">+</span>
+                    <span class="ml-4">Add</span>
+                </button>
+            </div>
+        </div> --}}
+
+    </div>
+
+</section>
