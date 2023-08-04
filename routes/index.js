@@ -1,6 +1,6 @@
 import express from 'express'
 import { adminOrderPlaceController, cartController, homeController, loginController, orderPlaceController, registerController } from '../app/http/controllers'
-import { Auth } from '../app'
+import { Auth, adminAuth } from '../app'
 const router   = express.Router()
 const customer = express.Router()
 const admin    = express.Router()
@@ -26,8 +26,8 @@ customer.get('/single/:id',Auth,orderPlaceController.singleOrder)
 
 
 //admin
-admin.get('/orders',adminOrderPlaceController.getOrders)
-admin.post('/orders',adminOrderPlaceController.updateOrders)
+admin.get('/orders',adminAuth,adminOrderPlaceController.getOrders)
+admin.post('/orders',adminAuth,adminOrderPlaceController.updateOrders)
  
 router.get('*',(req,res,next)=>{
     res.status(404).end('not found page')
