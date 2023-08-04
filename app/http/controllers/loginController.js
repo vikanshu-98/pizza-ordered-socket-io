@@ -31,7 +31,7 @@ const loginController={
                 })
             })(req,res,next) 
 
-        }catch(err){
+        }catch(error){
             next(error) 
         }
     },
