@@ -3,7 +3,8 @@ const hidden = document.getElementById('closeMenu')
 const list = document.getElementById('list')
 const axios = require('axios')
 const moment = require('moment')
-
+import initAdmin from './admin'
+ 
 display.onclick = function () {
     list.style.visibility = "visible"
     list.style.right = "0%"
@@ -78,16 +79,19 @@ async function updateCart(obj) {
 //current status blink 
 const blinkerCurrentStatus = () => {
     let blink = document.getElementById('statusBlink')
-    if (!blink.style.backgroundColor) {
-        blink.style.backgroundColor = 'white'
-    } else {
-        let rgbString = blink.style.backgroundColor
-        if (rgbString == 'white')
-            blink.style.backgroundColor = 'green'
-        else {
+    if(blink){
+        if (!blink.style.backgroundColor) {
             blink.style.backgroundColor = 'white'
+        } else {
+            let rgbString = blink.style.backgroundColor
+            if (rgbString == 'white')
+                blink.style.backgroundColor = 'green'
+            else {
+                blink.style.backgroundColor = 'white'
+            }
         }
     }
+     
 }
 
 setInterval(blinkerCurrentStatus, 1000)
@@ -98,7 +102,8 @@ let singleDocumentId = document.getElementById('singleOrderedData')
 let AllList = document.querySelectorAll('.order-tracking')
 let status = document.querySelectorAll('.order-status')
 let order = (singleDocumentId) ? JSON.parse(singleDocumentId.value) : null
-const updateStatus = function () {
+let span = document.createElement('span')
+const updateStatus = function (order) {
     AllList.forEach(elem => {
         elem.classList.remove('completed')
     });
@@ -109,8 +114,6 @@ const updateStatus = function () {
         }
         if (elem.dataset.status == order.orderStatus) {
             stepCompleted = false
-            let span = document.createElement('span')
-            // span.innerText=moment(order.updatedAt).day()
             let day1 = moment(order.updatedAt).format('ddd,MMM DD');
             let day2 = moment(order.updatedAt).format(' hh:mm A'); 
             span.innerText =day1+' at '+day2
@@ -120,13 +123,43 @@ const updateStatus = function () {
         }
     })
 }
-updateStatus()
+updateStatus(order)
 
+const setLimitCharacter= ()=>{ 
+    let allDataThatToBeLimit   = document.querySelectorAll('.limit-length')
+    allDataThatToBeLimit.forEach(elem=>{
+        elem.innerText=`${elem.innerText.substr(0,10)}...` 
+    })
+}
 
+const callAllFun=()=>{
+    
+    setLimitCharacter()  
+}
+ 
+document.onload =callAllFun()
+ 
+ 
 //socket js starts here
 
 const socket = io()
+ 
+if(order){ 
+    socket.on('connect',()=>{
+        socket.emit('join',`${order._id}_order`)
+        
+    })
+} 
 
-socket.on('connect', () => {
-
+socket.on('orderUpdate',(data)=>{
+    const orderObj = {...order}
+    orderObj.orderStatus = data.status
+    orderObj.updatedAt = moment()
+    updateStatus(orderObj)
+    
 })
+
+
+initAdmin(socket,setLimitCharacter)
+
+ 

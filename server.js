@@ -66,8 +66,16 @@ const io = Socket(server)
 
 io.on('connection',(socket)=>{
     console.log('connected...')
+    socket.on('join',(order)=>{
+        socket.join(order)
+    })
 
-    io.on('newOrderAdded',(data)=>{
+    eventEmitter.on('newOrderAdded',(data)=>{
         io.to('adminRoom').emit('newOrder',data)
+    })
+
+    eventEmitter.on('orderUpdated',(data,cb)=>{
+        io.to(data.orderId+'_order').emit('orderUpdate',data)
+        cb(200)
     })
 })

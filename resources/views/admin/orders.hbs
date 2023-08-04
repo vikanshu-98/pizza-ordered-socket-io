@@ -1,26 +1,97 @@
-<section class="xl:w-[1200px] mx-auto mt-4">
+<section class="xl:w-[1200px] mx-auto mt-4" id="adminOrderSection">
     <div>
         <h1 class="capitalize text-xl font-bold">All Orders</h1>
     </div>
+    {{#if messages.success }}
+    <div id="successRegistered"
+        class="flex items-center bg-green-500 text-white text-sm font-bold py-1 my-3 rounded-full px-3" role="alert">
+        <img class="w-10" src="/img/tick.png" alt="error" />
+        <p class="px-2">{{messages.success}}</p> 
+    </div>
+    {{/if }}
     <div class="pt-4">
-        <table class=" table-auto w-full border-separate border border-white  bg-[#fff]">
+        <table class=" table-auto w-full border-separate border border-white  bg-[#fff] text-[14px] custom-shadow">
             <thead>
                 <tr class="bg-[#FE5F1E] font-bold text-white text-left">
                     <th class=" px-4 py-2 border border-white">S No</th>
                     <th class=" px-4 py-2 border border-white">Order Id</th>
-                    <th class=" px-4 py-2 border border-white">Mobile</th>
-                    <th class=" px-4 py-2 border border-white">Address</th>
+                    <th class=" px-4 py-2 border border-white">customer Details</th>
+                    <th class=" px-4 py-2 border border-white">Order Status</th>
                     <th class=" px-4 py-2 border border-white">Date Time </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tableContentId">
                 {{#each orderData}}
                 <tr>
-                    <td class=" px-4 py-2  border border-white"> {{inc @index}}</td>
-                    <td class=" px-4 py-2  border border-white"><a class="text-[#FE5F1E]" href="/customer/single/{{this._id}}">{{this._id }}</a></td>
-                    <td class=" px-4 py-2  border border-white">{{this.phoneNumber}}</td>
-                    <td class=" px-4 py-2  border border-white">{{this.address}}</td>
-                    <td class=" px-4 py-2  border border-white">{{changeDateFormat  this.createdAt}}</td>
+                    <td class=" px-4 py-2  border border-white">{{inc @index}} </td>
+                    <td class=" py-2  border border-white">
+                        <table class="w-full border border-black-400">
+                            <thead>
+                                <tr class=" font-bold  text-left">
+                                    <th class="px-4 py-2 border border-black-400">Order Id</th>
+                                    <th class="px-4 py-2 border border-black-400">Name - Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border border-black-400"><abbr title="{{this._id }}"
+                                            class="no-underline limit-length text-[#b23301]">{{this._id}}</abbr></td>
+                                    <td class="px-4 py-2 border border-black-400">
+                                        {{#each this.orders}}
+                                        {{inc @index}}. {{ this.item.name }} - {{ this.qty }}<br>
+                                        {{/each }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                    <td class=" py-2  border border-white">
+                        <table class="w-full border border-black-400">
+                            <thead>
+                                <tr class=" font-bold  text-left">
+                                    <th class="px-4 py-2 border border-black-400">Name</th>
+                                    <th class="px-4 py-2 border border-black-400">Email</th>
+                                    <th class="px-4 py-2 border border-black-400">Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-2 border border-black-400">{{this.customerId.name}}</td>
+                                    <td class="px-4 py-2 border border-black-400"> <abbr
+                                            title="{{this.customerId.email}}"
+                                            class="no-underline limit-length">{{this.customerId.email}}</abbr></td>
+                                    <td class="px-4 py-2 border border-black-400">{{this.address}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                    <td class=" px-4 py-2  border border-white">
+                        <div class="inline-block relative w-[10rem]">
+                            <form actio="/admin/order/status" method="POST">
+                                <input type="hidden" name="orderId" value="{{this._id }}" />
+                                <select name="status" onchange="this.form.submit()"
+                                    class="cursor-pointer font-bold block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                                    <option value="1" {{selected this.orderStatus 1}}>{{orderStatus 1 true}}</option>
+                                    <option value="2" {{selected this.orderStatus 2}}>{{orderStatus 2 true}}</option>
+                                    <option value="3" {{selected this.orderStatus 3}}>{{orderStatus 3 true}}</option>
+                                    <option value="4" {{selected this.orderStatus 4}}>{{orderStatus 4 true}}</option>
+                                    <option value="5" {{selected this.orderStatus 5}}>{{orderStatus 5 true}}</option>
+                                    <option value="6" {{selected this.orderStatus 6}}>{{orderStatus 6 true}}</option>
+                                </select>
+                            </form>
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.348 8z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </td>
+                    <td class=" px-4 py-2  border border-white">{{ changeDateFormat this.createdAt }}</td>
                 </tr>
                 {{/each }}
 

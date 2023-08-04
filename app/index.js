@@ -9,3 +9,8 @@ export {default as Orders} from './models/orders'
 
 export {default as handleBarsHelpers} from './helpers/handleBarsHelpers'
 export {default as Auth} from './http/middleware/isLogin'
+
+
+export {default as OrderedStatusEnum} from './enum/OrderedStatusEnum'
+
+export {default as OrderStatusService} from './services/OrderStatusService'
