@@ -11,6 +11,13 @@ const handleBarsHelpers=()=>{
             return '0'
         } 
     }),
+    hbs.registerHelper('isEmptyOrNot',(object)=>{
+        if(object.lenth==0){
+            return true
+        }else{
+            return false
+        } 
+    }),
     hbs.registerHelper('multipy',(v1,v2)=>{
         return v1*v2
     }),
@@ -72,6 +79,14 @@ const handleBarsHelpers=()=>{
             default: text=''; break;
         }
         return text
+    })
+    hbs.registerHelper('checkIsAdminLogin',function(users){
+        const adminRole=['admin','superadmin']
+        let url = '' 
+        if(adminRole.includes(users.role))
+            url = '/admin/orders'
+        else url = '/customer/orders'
+        return url
     })
      
 

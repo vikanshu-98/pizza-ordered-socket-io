@@ -15,3 +15,5 @@ export {default as adminAuth} from './http/middleware/adminAuth'
 export {default as OrderedStatusEnum} from './enum/OrderedStatusEnum'
 
 export {default as OrderStatusService} from './services/OrderStatusService'
+
+export {default as registrationValidation} from './http/requestValidations/registrationValidation'

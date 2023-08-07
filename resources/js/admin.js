@@ -2,11 +2,11 @@ import axios from "axios"
 import moment from "moment";
 
 function initAdmin(socket, setLimitCharacter) {
-    let actualData;
+    let actualData     = [];
     let adminSectionId = document.getElementById('adminOrderSection');
     let tableContentId = document.getElementById('tableContentId');
     
-    if(/admin/.test(location.pathname)){
+    if(/admin/.test(location.pathname)){ 
         getInitialData();
     }
     async function getInitialData() {
@@ -17,10 +17,10 @@ function initAdmin(socket, setLimitCharacter) {
                     'accept': 'application/json'
                 }
             })
-            console.log(data)
             if (data.status == 200) {
                 actualData = data.data
-                if (!actualData.length) {
+               
+                if (actualData.length==0) {
                     adminSectionId.innerHTML = generateMarkupOfNoOrderFound();
                      
                 } else {
@@ -180,12 +180,33 @@ function initAdmin(socket, setLimitCharacter) {
         return text
     }
     function generateMarkupOfNoOrderFound(){
-        return text= `<div class="font-bold py-2 w-2/5 mx-auto text-center">  
+        let text= `<div class="font-bold py-2 w-2/5 mx-auto text-center">  
             <p class="text-zinc-900  font-bold text-2xl">😮 No Orders Found.</p>
             <img src="/img/no-order.jpg" alt="no-order"/> 
-            <a href="/" class="inline-block rounded-full btn-primary text-white font-bold px-6 py-2 cursor-pointer">Go back</a>
+            <a href="/" class="inline-block rounded-full text-white font-bold px-6 py-2 cursor-pointer bg-[#FE5F1E] shadow-2xl transition-all ease-in-out duration-1000 hover:bg-white hover:text-[#FE5F1E] border hover:border-[#FE5F1E] border-[#fff]">Go back</a>
         </div>`;
+        return text;
     }
+
+    socket.once('newOrder',(data)=>{
+        actualData.unshift(data) 
+        if(actualData.length!=0){
+            var notyf = new Notyf({
+                duration: 2000,
+                position: {
+                    x: 'right',
+                    y: 'left',
+    
+                }
+            });
+            notyf.success('New Order Added by '+ data.customerId.name)
+            tableContentId.innerHTML='';
+            tableContentId.innerHTML = generateMarkup(actualData);
+            setLimitCharacter()
+        }else{
+            adminSectionId.innerHTML = generateMarkupOfNoOrderFound();  
+        }
+    })
 
 }
 

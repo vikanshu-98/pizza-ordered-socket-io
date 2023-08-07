@@ -1,4 +1,5 @@
 <section class="xl:w-[1200px] mx-auto mt-4">
+    {{#if orderData}}
     <div>
         <h1 class="capitalize text-xl font-bold">All Orders</h1>
     </div>
@@ -17,14 +18,24 @@
                 {{#each orderData}}
                 <tr>
                     <td class=" px-4 py-2  border border-white"> {{inc @index}}</td>
-                    <td class=" px-4 py-2  border border-white"><a class="text-[#FE5F1E]" href="/customer/single/{{this._id}}">{{this._id }}</a></td>
+                    <td class=" px-4 py-2  border border-white"><a class="text-[#FE5F1E]"
+                            href="/customer/single/{{this._id}}">{{this._id }}</a></td>
                     <td class=" px-4 py-2  border border-white">{{this.phoneNumber}}</td>
                     <td class=" px-4 py-2  border border-white">{{this.address}}</td>
-                    <td class=" px-4 py-2  border border-white">{{changeDateFormat  this.createdAt}}</td>
+                    <td class=" px-4 py-2  border border-white">{{changeDateFormat this.createdAt}}</td>
                 </tr>
                 {{/each }}
 
             </tbody>
         </table>
     </div>
+    {{else}}
+    <div class="font-bold py-2 w-2/5 mx-auto text-center">
+        <p class="text-zinc-900  font-bold text-2xl">😮 No Orders Found.</p>
+        <img src="/img/no-order.jpg" alt="no-order" />
+        <a href="/" class="inline-block rounded-full text-white font-bold px-6 py-2 cursor-pointer bg-[#FE5F1E] shadow-2xl transition-all ease-in-out duration-1000 hover:bg-white hover:text-[#FE5F1E] border hover:border-[#FE5F1E] border-[#fff]">Go
+            back</a>
+    </div>
+    {{/if}}
+
 </section>

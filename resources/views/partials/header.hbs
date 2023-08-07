@@ -12,10 +12,11 @@
                         <li class="ml-6 max-[768px]:mt-[30px]"><a
                                         class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Offer</a>
                         </li>
-                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="/customer/orders"
+
+                        {{#if users }}
+                        <li class="ml-6 max-[768px]:mt-[30px]"><a href="{{checkIsAdminLogin users}}"
                                         class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">Orders</a>
                         </li>
-                        {{#if users }}
                         <li class="ml-6 max-[768px]:mt-[30px]"><a href="/profiels"
                                         class="transition-all ease-in-out duration-[.3s]  hover:text-[#FE5F1E] hover:cursor-pointer">{{users.name}}</a>
                         </li>
@@ -33,7 +34,8 @@
                         <li class="ml-6 max-[768px]:mt-[30px]">
                                 <a href="/cart"
                                         class="transition-all ease-in-out duration-[.3s]  hover:cursor-pointer  inline-block px-4 py-2 rounded-3xl items-center bg-[#FE5F1E] hover:bg-[#b23301] flex max-[768px]:w-[90px]">
-                                        <span class="font-bold text-[#fff] pr-2" id="cartCounter">{{nullCheckCondition session.cart}}</span>
+                                        <span class="font-bold text-[#fff] pr-2" id="cartCounter">{{nullCheckCondition
+                                                session.cart}}</span>
                                         <img src="/img/cart.png" alt="ss">
                                 </a>
                         </li>

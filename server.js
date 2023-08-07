@@ -49,7 +49,6 @@ app.use(flash())
 app.use((req,res,next)=>{
     res.locals.session=req.session
     res.locals.users=req.user
-    // console.log(req.user)
     next()
 })
 app.use(router) 
@@ -65,16 +64,16 @@ const server = app.listen(APP_PORT,()=>{console.log(APP_PORT)})
 const io = Socket(server)
 
 io.on('connection',(socket)=>{
-    console.log('connected...')
-    socket.on('join',(order)=>{
+     
+    socket.once('join',(order)=>{
         socket.join(order)
     })
 
-    eventEmitter.on('newOrderAdded',(data)=>{
+    eventEmitter.once('newOrderAdded',(data)=>{
         io.to('adminRoom').emit('newOrder',data)
     })
 
-    eventEmitter.on('orderUpdated',(data,cb)=>{
+    eventEmitter.once('orderUpdated',(data,cb)=>{
         io.to(data.orderId+'_order').emit('orderUpdate',data)
         cb(200)
     })

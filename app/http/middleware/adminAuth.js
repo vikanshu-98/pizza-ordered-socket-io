@@ -1,10 +1,11 @@
 const adminAuth=(req,res,next)=>{
     if(req.isAuthenticated()){
-        console.log(req.user)
+        console.log(req.user.role)
+        if(req.user.role=='superadmin' || req.user.admin=='admin')
+            next()
     }else{
         res.redirect('/login')
     }
-    next()
 }
 
 export default adminAuth

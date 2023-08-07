@@ -1,6 +1,5 @@
 import Joi from 'joi'
 import { CustomErrorHandler, Orders,Users } from '../../..'
-import moment from 'moment'
 
 const orderPlaceController={
     async orderPlace(req,res,next){
@@ -17,9 +16,8 @@ const orderPlaceController={
                 req.flash('address',address)
                 return res.redirect('/cart')
             }
-    
-            console.log(req.user);
-            const obj =await new Orders({
+
+            const obj = new Orders({
                 customerId:req.user._id,
                 address:address,
                 phoneNumber:number,
@@ -56,7 +54,6 @@ const orderPlaceController={
     async singleOrder(req,res,next){
         try{
             const data = await Orders.findById(req.params.id) 
-            console.log(data.orderStatus);
             if(req.user._id==data.customerId.toString())
                 res.render('customer/single',{'order_Status':data.orderStatus,'order_date':data.createdAt,'order_id':data._id,'orders':data.orders,'complete_data':data})
             else 

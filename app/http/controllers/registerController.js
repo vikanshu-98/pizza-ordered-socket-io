@@ -1,5 +1,4 @@
-import { Users } from "../.."
-
+import { Users, registrationValidation } from "../.."
 const registerController={
     index(req,res,next){
         res.render('auth/registration')
@@ -14,7 +13,14 @@ const registerController={
                 req.flash('password',password)
                 res.redirect('/register')
             }
-
+            const {error} = registrationValidation.validate(req.body)
+            if(error){
+                req.flash('error',error.message)
+                req.flash('name',name)
+                req.flash('email',email)
+                req.flash('password',password)
+                res.redirect('/register')
+            }
             const isExist  = await Users.exists({email:email})
             if(isExist){
                 req.flash('error','*This email is already taken.') 

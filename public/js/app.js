@@ -22,7 +22,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 function initAdmin(socket, setLimitCharacter) {
-  var actualData;
+  var actualData = [];
   var adminSectionId = document.getElementById('adminOrderSection');
   var tableContentId = document.getElementById('tableContentId');
   if (/admin/.test(location.pathname)) {
@@ -47,34 +47,33 @@ function initAdmin(socket, setLimitCharacter) {
             });
           case 3:
             data = _context.sent;
-            console.log(data);
             if (!(data.status == 200)) {
-              _context.next = 10;
+              _context.next = 9;
               break;
             }
             actualData = data.data;
-            if (!actualData.length) {
+            if (actualData.length == 0) {
               adminSectionId.innerHTML = generateMarkupOfNoOrderFound();
             } else {
               tableContentId.innerHTML = generateMarkup(actualData);
               setLimitCharacter();
             }
-            _context.next = 11;
+            _context.next = 10;
             break;
-          case 10:
+          case 9:
             throw new Error('something went wrong....');
-          case 11:
-            _context.next = 16;
+          case 10:
+            _context.next = 15;
             break;
-          case 13:
-            _context.prev = 13;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](0);
             throw new Error(_context.t0.message);
-          case 16:
+          case 15:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 13]]);
+      }, _callee, null, [[0, 12]]);
     }));
     return _getInitialData.apply(this, arguments);
   }
@@ -156,8 +155,27 @@ function initAdmin(socket, setLimitCharacter) {
     return text;
   }
   function generateMarkupOfNoOrderFound() {
-    return text = "<div class=\"font-bold py-2 w-2/5 mx-auto text-center\">  \n            <p class=\"text-zinc-900  font-bold text-2xl\">\uD83D\uDE2E No Orders Found.</p>\n            <img src=\"/img/no-order.jpg\" alt=\"no-order\"/> \n            <a href=\"/\" class=\"inline-block rounded-full btn-primary text-white font-bold px-6 py-2 cursor-pointer\">Go back</a>\n        </div>";
+    var text = "<div class=\"font-bold py-2 w-2/5 mx-auto text-center\">  \n            <p class=\"text-zinc-900  font-bold text-2xl\">\uD83D\uDE2E No Orders Found.</p>\n            <img src=\"/img/no-order.jpg\" alt=\"no-order\"/> \n            <a href=\"/\" class=\"inline-block rounded-full text-white font-bold px-6 py-2 cursor-pointer bg-[#FE5F1E] shadow-2xl transition-all ease-in-out duration-1000 hover:bg-white hover:text-[#FE5F1E] border hover:border-[#FE5F1E] border-[#fff]\">Go back</a>\n        </div>";
+    return text;
   }
+  socket.once('newOrder', function (data) {
+    actualData.unshift(data);
+    if (actualData.length != 0) {
+      var notyf = new Notyf({
+        duration: 2000,
+        position: {
+          x: 'right',
+          y: 'left'
+        }
+      });
+      notyf.success('New Order Added by ' + data.customerId.name);
+      tableContentId.innerHTML = '';
+      tableContentId.innerHTML = generateMarkup(actualData);
+      setLimitCharacter();
+    } else {
+      adminSectionId.innerHTML = generateMarkupOfNoOrderFound();
+    }
+  });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (initAdmin);
 
@@ -186,6 +204,7 @@ var hidden = document.getElementById('closeMenu');
 var list = document.getElementById('list');
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/dist/browser/axios.cjs");
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+var socket = io();
 
 display.onclick = function () {
   list.style.visibility = "visible";
@@ -225,12 +244,12 @@ function updateCart(_x) {
 } //current status blink 
 function _updateCart() {
   _updateCart = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(obj) {
-    var notyf, response;
+    var _notyf2, response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          notyf = new Notyf({
+          _notyf2 = new Notyf({
             duration: 2000,
             position: {
               x: 'right',
@@ -243,9 +262,9 @@ function _updateCart() {
           response = _context.sent;
           if (response.data && response.status == 200) {
             document.getElementById('cartCounter').innerText = response.data.totalQty;
-            notyf.success('Items added to the cart');
+            _notyf2.success('Items added to the cart');
           } else {
-            notyf.error('something went wrong!!');
+            _notyf2.error('something went wrong!!');
           }
           _context.next = 11;
           break;
@@ -279,11 +298,13 @@ setInterval(blinkerCurrentStatus, 1000);
 //status change code
 
 var singleDocumentId = document.getElementById('singleOrderedData');
+var nextStatus = document.getElementById('nextStatus');
 var AllList = document.querySelectorAll('.order-tracking');
 var status = document.querySelectorAll('.order-status');
 var order = singleDocumentId ? JSON.parse(singleDocumentId.value) : null;
 var span = document.createElement('span');
 var updateStatus = function updateStatus(order) {
+  var isAdmin = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   AllList.forEach(function (elem) {
     elem.classList.remove('completed');
   });
@@ -300,8 +321,53 @@ var updateStatus = function updateStatus(order) {
       elem.appendChild(span);
     }
   });
+  if (isAdmin) {
+    var _notyf = new Notyf({
+      duration: 2000,
+      position: {
+        x: 'right',
+        y: 'left'
+      }
+    });
+    _notyf.success('order status has been changed  to ' + statusCondition(order.orderStatus));
+  }
+  nextStatus.innerText = statusCondition(order.orderStatus);
 };
-updateStatus(order);
+if (location.pathname.includes('/customer')) updateStatus(order);
+function statusCondition(status) {
+  var text = '';
+  var statusObj = {};
+  statusObj.order_placed = 1;
+  statusObj.order_confirmed = 2;
+  statusObj.in_the_kitchen = 3;
+  statusObj.begin_packed = 4;
+  statusObj.out_for_delivery = 5;
+  statusObj.delivered = 6;
+  var index = status == 'delivered' ? statusObj[status] : statusObj[status] + 1;
+  switch (index) {
+    case 1:
+      text = 'Order Received';
+      break;
+    case 2:
+      text = 'Order Confirmed';
+      break;
+    case 3:
+      text = 'In the Kitchen';
+      break;
+    case 4:
+      text = 'Begin Packed';
+      break;
+    case 5:
+      text = 'Out For Delivery';
+      break;
+    case 6:
+      text = 'Order completed';
+      break;
+    default:
+      break;
+  }
+  return text;
+}
 var setLimitCharacter = function setLimitCharacter() {
   var allDataThatToBeLimit = document.querySelectorAll('.limit-length');
   allDataThatToBeLimit.forEach(function (elem) {
@@ -315,17 +381,19 @@ document.onload = callAllFun();
 
 //socket js starts here
 
-var socket = io();
 if (order) {
-  socket.on('connect', function () {
+  socket.once('connect', function () {
     socket.emit('join', "".concat(order._id, "_order"));
   });
 }
-socket.on('orderUpdate', function (data) {
+if (location.pathname.includes('/admin')) {
+  socket.emit('join', 'adminRoom');
+}
+socket.once('orderUpdate', function (data) {
   var orderObj = _objectSpread({}, order);
   orderObj.orderStatus = data.status;
   orderObj.updatedAt = moment();
-  updateStatus(orderObj);
+  updateStatus(orderObj, true);
 });
 (0,_admin__WEBPACK_IMPORTED_MODULE_0__["default"])(socket, setLimitCharacter);
 

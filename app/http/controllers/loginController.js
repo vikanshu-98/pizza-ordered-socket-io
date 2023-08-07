@@ -15,16 +15,19 @@ const loginController={
             passport.authenticate('local',(err,user,message)=>{
                 if(err){
                     req.flash('error',message.message)
+                    req.flash('email','email')
                     next(err)
                 }
                 if(!user){
                     req.flash('error',message.message)
+                    req.flash('email','email')
                     res.redirect('/login')
                 }
 
                 req.logIn(user,(err)=>{
                     if(err){
                         req.flash("error",message.message)
+                        req.flash('email','email')
                         return next(err)
                     }
                     return res.redirect('/')

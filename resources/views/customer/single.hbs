@@ -1,5 +1,6 @@
 <section class="tracking-status xl:w-[1200px] mx-auto px-[1rem]">
     <div class="grid grid-cols-2 my-6 py-4 justify-items-end">
+        
         <div>
             <h1 class="font-bold capitalize text-xl">
                 products in your order
@@ -11,8 +12,8 @@
         </div>
         <div>
             <h2 class="font-bold text-[12px]">Order #{{order_id}}</h2>
-            <div class="text-[13px]"><span class="font-bold">Date Ordered :</span> <span class="text-xs tracking-[1px]">{{getDateFormat order_date}}</span></div>
-            <div class="text-[13px]"><span class="font-bold">Actual Status :</span> <span class="text-xs text-[#FE5F1E] font-bold current_status relative" >{{ orderStatus order_Status}}<span id="statusBlink" class="status absolute top-px inline-block w-[12px] h-[12px] rounded-full bg-[#FE5F1E] ml-2"></span></span></div>
+            <div class="text-[13px]"><span class="font-bold">Date Ordered :</span> <span class="text-xs tracking-[1px]">{{getDateFormat order_date}}</span></div>{{ order_Status }}
+            <div class="text-[13px]"><span class="font-bold">Actual Status :</span> <span class="text-xs text-[#FE5F1E] font-bold current_status relative"   ><span id="nextStatus">{{ orderStatus order_Status}}</span> <span id="statusBlink" class="status absolute top-px inline-block w-[12px] h-[12px] rounded-full bg-[#FE5F1E] ml-2"></span></span></div>
 
         </div>
 
@@ -46,17 +47,6 @@
         </div>
     </div>
 
-
-    <div class="flex justify-between my-4">
-        <div class="order-trackings completed">
-            <span class="is-completed"></span>
-        </div>
-         <div class="order-trackings completed">
-            <span class="is-completed"></span>
-        </div>
-         <div class="order-trackings">
-            <span class="is-completed"></span>
-        </div>
-    </div>
+ 
 
 </section>
