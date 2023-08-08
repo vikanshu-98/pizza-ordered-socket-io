@@ -2,7 +2,6 @@ import { createTransports } from "../../config";
 
 class SendEmailNotification {
     async sendEmail(to, subject = "", html = "", from = "hackrajput@info.com") {
-      console.log(approot)
     await createTransports.sendMail({
       from,
       to, 
@@ -11,9 +10,9 @@ class SendEmailNotification {
       
     },(error, info) => {
       if (error) {
-        return  (error.message)
-      } 
-      console.log('Email sent: ' + info);
+        console.log(error.message)
+      }
+      return true
     })
   }
 }

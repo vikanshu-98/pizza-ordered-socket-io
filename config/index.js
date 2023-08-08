@@ -10,6 +10,8 @@ export const {
     SMTP_EMAIL_PORT,
     SMTP_EMAIL_USER_NAME,
     SMTP_EMAIL_PASSWORD, 
+    APP_URL,
+    FORGOT_PASSWORD_LINK_EXPIRY_TIME
 
 }=process.env
 

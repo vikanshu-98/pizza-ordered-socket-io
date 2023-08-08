@@ -9,8 +9,8 @@ const  createTransport= nodemailer.createTransport({
       user: process.env.SMTP_EMAIL_USER_NAME,
       pass: process.env.SMTP_EMAIL_PASSWORD
     },
-    logger:true,
-    debug:true
+    // logger:true,
+    // debug:true
 })
  
 export default createTransport

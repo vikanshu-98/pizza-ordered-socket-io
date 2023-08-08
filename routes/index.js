@@ -13,6 +13,8 @@ router.post('/login',loginController.index)
 router.get('/logout',loginController.logout)
 router.get('/forget-password',loginController.loginForm)
 router.post('/forget-password',loginController.forgetPassword)
+router.get('/forget-password-link',loginController.forgetPasswordLinkConfirm)
+router.post('/reset-new-password',loginController.resetPassword)
 
 
 router.post('/updateCart',homeController.updateCart)

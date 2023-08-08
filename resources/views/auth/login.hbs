@@ -13,13 +13,14 @@
                         </a>
                         <h2 class="text-center text-2xl font-extrabold capitalize mt-4 max-[640px]:text-xl">{{#if
                             isForgetPassword}}Reset your Password {{else }}SignIn into your account {{/if}}</h2>
+                        {{ messages.error }}
                         {{#if messages.success}}
-                        <div id="successRegistered" class="text-green-600 font-bold text-center text-[12px]">
+                        <div id="successRegistered" class="text-green-600 font-bold text-center text-[15px]">
                             {{messages.success}}
                         </div>
                         {{/if}}
                         {{#if messages.error}}
-                        <div id="errorMessage" class="text-red-600 font-bold text-center text-[12px]">
+                        <div id="errorMessage" class="text-red-600 font-bold text-center text-[15px]">
                             {{messages.error}}
                         </div>
                         {{/if}}
@@ -61,3 +62,5 @@
         </div>
     </div>
 </div>
+
+ 

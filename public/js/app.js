@@ -220,11 +220,12 @@ if (successRegistered) {
   }, 3000);
 }
 var errorMessage = document.getElementById('errorMessage');
-if (errorMessage) {
-  setTimeout(function () {
-    errorMessage.remove();
-  }, 3000);
-}
+// if (errorMessage) {
+//     setTimeout(() => {
+//         errorMessage.remove()
+//     }, 10000)
+// }
+
 var btn = document.getElementById('loginBtn');
 if (btn) {
   btn.onclick = function () {

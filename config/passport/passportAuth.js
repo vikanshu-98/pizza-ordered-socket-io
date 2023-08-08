@@ -10,17 +10,11 @@ const initializePassport=function(passport){
         if(!isExist){
             return done(null,false,{message:"*Invalid Email or Password."})
         }
-
-        bcrypt.compare(password,isExist.password,(err,correct)=>{
-            if(err){
-                return done(null,false,{message:"*Invalid Email or Password."})
-            }
-            if(correct){
-                return done(null,isExist,{message:"Login successfully"})
-            }
-
-            return done(null,false,{message:"*Invalid Email or passoword"})
-        })
+        const isSame=await bcrypt.compare(password,isExist.password);
+        if(!isSame){
+            return done(null,false,{message:"*Invalid Email or Password."})
+        }
+        return done(null,isExist,{message:"Login successfully"})
     })
 
     passport.use(Strategy1)

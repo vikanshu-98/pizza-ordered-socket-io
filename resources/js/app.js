@@ -28,11 +28,11 @@ if (successRegistered) {
 
 
 const errorMessage = document.getElementById('errorMessage')
-if (errorMessage) {
-    setTimeout(() => {
-        errorMessage.remove()
-    }, 3000)
-}
+// if (errorMessage) {
+//     setTimeout(() => {
+//         errorMessage.remove()
+//     }, 10000)
+// }
 
 
 const btn = document.getElementById('loginBtn')
