@@ -11,6 +11,10 @@ router.post('/register',registerController.register)
 router.get('/login',loginController.loginForm)
 router.post('/login',loginController.index)
 router.get('/logout',loginController.logout)
+router.get('/forget-password',loginController.loginForm)
+router.post('/forget-password',loginController.forgetPassword)
+
+
 router.post('/updateCart',homeController.updateCart)
 router.get('/cart',cartController.index)
 

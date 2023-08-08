@@ -13,6 +13,7 @@ import EventEmitter from 'events'
 import Socket from 'socket.io'
 const eventEmitter =new EventEmitter()
 
+global.approot=__dirname
 const Store =new MonoDb({mongoUrl:DB_URL,collectionName:"sessions"})
 require('./config/database/connection') 
 handleBarsHelpers()

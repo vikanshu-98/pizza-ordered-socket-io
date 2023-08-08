@@ -1,8 +1,14 @@
-import passport from "passport"
+import passport from "passport" 
+import { SendEmailNotification, forgetPasswordSchema } from "../.."
+ 
 const loginController={
 
     loginForm(req,res,next){
-        res.render('auth/login')
+        if(req.path=='/login'){
+            res.render('auth/login',{isForgetPassword:false})
+        }else{ 
+            res.render('auth/login',{isForgetPassword:true})
+        } 
     },
     async index(req,res,next){
         try{
@@ -45,6 +51,20 @@ const loginController={
             }
             res.redirect('/')
         })
+    },
+    async forgetPassword(req,res,next){
+        try {
+            const {error} = forgetPasswordSchema.validate(req.body)
+            if(error){
+                req.flash('error',error.message)
+                req.flash('email','email')
+                res.redirect('/forget-password')   
+            } 
+           
+            await SendEmailNotification.sendEmail('abcd@gmail.com','Reset Password',res.render('email/forgetpassword'));
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
