@@ -20,20 +20,18 @@ const loginController={
             if(!email || !password){
                 req.flash('error','*All Fields are required.')
                 req.flash('email','email')
-                res.redirect('/login')
+                return res.redirect('/login')
             }
             passport.authenticate('local',(err,user,message)=>{
-                // console.log(message)
                 if(err){
                     req.flash('error',message.message)
                     req.flash('email',email)
                     next(err)
                 }
                 if(!user){
-                    console.log(message.message)
                     req.flash('error',message.message)
                     req.flash('email',email)
-                    res.redirect('/login')
+                    return res.redirect('/login')
                 }
 
                 req.logIn(user,(err)=>{
